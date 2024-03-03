@@ -1,7 +1,5 @@
 /** @format */
 
-const myId = '1234';
-
 const posts = [
 	{
 		userId: 1,
@@ -719,36 +717,3 @@ const posts = [
 		price: 353741,
 	},
 ];
-const handleBuildPost = (items) => {
-	const container = document.createElement('div');
-	container.setAttribute('id', 'posts');
-	items.forEach((post) => {
-		const content = document.createElement('div');
-		content.setAttribute('class', 'post-item');
-		const title = document.createElement('h1');
-		title.setAttribute('class', 'title');
-		title.innerHTML = post.title;
-
-		const body = document.createElement('p');
-		body.setAttribute('class', 'description');
-		body.innerHTML = post.price;
-
-		content.appendChild(title);
-		content.appendChild(body);
-
-		container.appendChild(content);
-	});
-
-	document.getElementById('post-content').appendChild(container);
-};
-
-const handleSearch = () => {
-	const min = document.getElementById('min').value;
-	const max = document.getElementById('max').value;
-
-	const items = posts.filter(
-		(element) => element.price > parseInt(min) && element.price < parseInt(max)
-	);
-
-	handleBuildPost(items);
-};
