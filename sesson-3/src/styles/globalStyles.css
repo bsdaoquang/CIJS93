@@ -1,0 +1,32 @@
+
+.btn-success{
+  background-color: white;
+}
+.container{
+  padding: 5% 
+}
+
+.card {
+  padding: 20px;
+  background-color: coral;
+  border-radius: 12px;
+  justify-content: center;
+  align-items: center;
+}
+
+.row{
+  display: flex;
+}
+
+.input {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  margin-bottom: 12px;
+  background-color: 'coral';
+}
+
+input {
+  border: none;
+  width: 100%;
+}
