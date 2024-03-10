@@ -71,7 +71,15 @@ const TodoList = () => {
 								name=''
 								id=''
 							/>
-							<span style={{ width: '100%' }}>{item.content}</span>
+							<span
+								style={{
+									width: '100%',
+									textDecorationLine: item.isCompleted
+										? 'line-through'
+										: 'none',
+								}}>
+								{item.content}
+							</span>
 							<button
 								style={{ border: 'none' }}
 								onClick={() => handleClearTask(item.id)}>
