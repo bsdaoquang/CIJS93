@@ -28,5 +28,14 @@
 
 input {
   border: none;
+  padding: 12px;
+  margin-bottom: 10px;
+  background-color: #f3f3f3;
   width: 100%;
+}
+
+.shadow{
+  -webkit-box-shadow: -1px 0px 24px 0px rgba(66, 68, 90, 0.43);
+-moz-box-shadow: -1px 0px 24px 0px rgba(66, 68, 90, 0.43);
+box-shadow: -1px 0px 24px 0px rgba(66, 68, 90, 0.43);
 }

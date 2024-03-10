@@ -4,20 +4,18 @@ import React from 'react';
 import { ButtonComponent } from '../components';
 
 const Card = (props) => {
-	const { num1, num2, size, color, children } = props;
-
-	console.log(num1 + num2);
+	const { children } = props;
 	return (
 		<div
+			className='shadow'
 			style={{
-				backgroundColor: color,
 				marginBottom: 12,
-				border: '1px solid #212121',
-			}}
-			className='card'>
+				padding: 12,
+				borderRadius: 12,
+				minHeight: 200,
+				border: '1px solid #e0e0e0',
+			}}>
 			{children}
-			<h1>{num1 + num2}</h1>
-			<ButtonComponent text='fafa' />
 		</div>
 	);
 };
