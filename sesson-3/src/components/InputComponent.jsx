@@ -3,17 +3,11 @@
 import React from 'react';
 
 const InputComponent = (props) => {
-	const { prefix, onChange } = props;
+	const { prefix, onChange, type } = props;
 
 	return (
-		<div className='row input'>
-			{prefix}
-			<input
-				type='text'
-				onChange={(val) => onChange(val.target.value)}
-				name=''
-				id=''
-			/>
+		<div>
+			<input type='text' name='' id='' />
 		</div>
 	);
 };
