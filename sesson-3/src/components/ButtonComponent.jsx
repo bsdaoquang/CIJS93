@@ -3,18 +3,20 @@
 import React from 'react';
 
 const ButtonComponent = (props) => {
-	const { color, padding, text, onClick, borderRadius } = props;
+	const { text, onPress } = props;
 
 	return (
 		<button
-			onClick={onClick}
+			onClick={onPress}
 			style={{
-				backgroundColor: color,
-				padding: padding,
-				margin: 12,
-				borderRadius,
 				border: 'none',
-				color: 'white',
+				padding: '10px 20px',
+				borderRadius: 8,
+				backgroundColor: '#e0e0e0',
+				margin: 8,
+				color: '#676767',
+				fontSize: 18,
+				fontWeight: 'Bold',
 			}}>
 			{text}
 		</button>
