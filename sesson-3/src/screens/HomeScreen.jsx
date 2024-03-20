@@ -1,93 +1,84 @@
 /** @format */
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { films } from '../data/films';
-import { Avatar, Button, List } from 'antd';
-import { FaHome } from 'react-icons/fa';
+import { List, Image, Input, Space, Button } from 'antd';
+
+const { Search } = Input;
 
 const HomeScreen = () => {
+	const [data, setData] = useState(films);
+	const [searchKey, setSearchKey] = useState('');
+	const [yearsOfFilms, setYearsOfFilms] = useState([]);
 	const [yearSelected, setYearSelected] = useState('');
 
-	// const [data, setData] = useState(
-	// 	films.filter((element) => element.Metascore !== 'N/A')
-	// );
+	useEffect(() => {
+		const items = [];
 
-	// const handleSort = (type) => {
-	// 	const items = [...data];
+		films.forEach(
+			(item) => !items.includes(item.Year) && items.push(item.Year)
+		);
 
-	// 	items.sort((a, b) =>
-	// 		type === 'ab'
-	// 			? parseFloat(a.Metascore) - parseFloat(b.Metascore)
-	// 			: parseFloat(b.Metascore) - parseFloat(a.Metascore)
-	// 	);
+		setYearsOfFilms(items);
+	}, []);
 
-	// 	setData(items);
-	// };
+	useEffect(() => {
+		if (!searchKey) {
+			setData(films);
+		} else {
+			handleSearch();
+		}
+	}, [searchKey]);
+
+	useEffect(() => {
+		if (!yearSelected) {
+			setData(films);
+		} else {
+			const items = films.filter((element) => element.Year === yearSelected);
+			setData(items);
+		}
+	}, [yearSelected]);
+
+	const handleSearch = () => {
+		const items = data.filter((element) =>
+			element.Title.toLowerCase().includes(searchKey)
+		);
+		setData(items);
+	};
 
 	return (
 		<div>
-			{/* <span>
-				Score: <button onClick={() => handleSort('ab')}>Nhỏ đến lớn</button>{' '}
-				<button onClick={() => handleSort()}>Lớn đến nhỏ</button>
-				<button
-					onClick={() =>
-						setData(films.filter((element) => element.Metascore !== 'N/A'))
-					}>
-					Clear
-				</button>
-			</span>
+			<Search
+				placeholder='Search'
+				allowClear
+				value={searchKey}
+				onPressEnter={handleSearch}
+				onChange={(val) => setSearchKey(val.target.value)}
+				onSearch={handleSearch}
+				size='large'
+			/>
 
-			<ul>
-				{data.map((item, index) => (
-					<li>
-						<h2>
-							{item.Title} {item.Metascore}
-						</h2>
-						<p>{item.Plot}</p>
-						{item.Type === 'movie' ? 'Phim' : 'Playlist'}
-					</li>
+			<Space style={{ margin: '20px 0' }}>
+				{yearsOfFilms.map((item) => (
+					<Button key={item} onClick={() => setYearSelected(item)}>
+						{item}
+					</Button>
 				))}
-			</ul> */}
+				<Button onClick={() => setYearSelected('')} danger type='primary'>
+					Clear
+				</Button>
+			</Space>
 
-			{/* <h1>Movie</h1>
-
-			<ul>
-				{films.map(
-					(item) =>
-						item.Type === 'movie' && (
-							<li>
-								{item.Title} - {item.Type}
-							</li>
-						)
+			<List
+				dataSource={data}
+				renderItem={(item, index) => (
+					<List.Item
+						key={`film${index}`}
+						extra={<img src={item.Images[0]} width={277} />}>
+						<List.Item.Meta title={item.Title} description={item.Actors} />
+					</List.Item>
 				)}
-			</ul>
-
-			<h1>Series</h1>
-
-			<ul>
-				{films
-					.filter((element) => element.Type === 'series')
-					.map((item) => (
-						<li>
-							{item.Title}
-							{item.Type}
-						</li>
-					))}
-			</ul> */}
-
-			{films.map((item) => (
-				<button onClick={() => setYearSelected(item.Year)}>{item.Year}</button>
-			))}
-
-			<ul>
-				{films.map((item) =>
-					yearSelected ? (
-						yearSelected === item.Year && <li>{item.Title}</li>
-					) : (
-						<li>{item.Title}</li>
-					)
-				)}
-			</ul>
+			/>
 		</div>
 	);
 };
