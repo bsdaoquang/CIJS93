@@ -6,6 +6,8 @@ import { Avatar, Button, List } from 'antd';
 import { FaHome } from 'react-icons/fa';
 
 const HomeScreen = () => {
+	const [yearSelected, setYearSelected] = useState('');
+
 	// const [data, setData] = useState(
 	// 	films.filter((element) => element.Metascore !== 'N/A')
 	// );
@@ -47,7 +49,7 @@ const HomeScreen = () => {
 				))}
 			</ul> */}
 
-			<h1>Movie</h1>
+			{/* <h1>Movie</h1>
 
 			<ul>
 				{films.map(
@@ -71,6 +73,20 @@ const HomeScreen = () => {
 							{item.Type}
 						</li>
 					))}
+			</ul> */}
+
+			{films.map((item) => (
+				<button onClick={() => setYearSelected(item.Year)}>{item.Year}</button>
+			))}
+
+			<ul>
+				{films.map((item) =>
+					yearSelected ? (
+						yearSelected === item.Year && <li>{item.Title}</li>
+					) : (
+						<li>{item.Title}</li>
+					)
+				)}
 			</ul>
 		</div>
 	);
