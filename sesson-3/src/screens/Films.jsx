@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { films } from '../data/films';
-import { Input, List } from 'antd';
+import { Card, Input, List } from 'antd';
 
 const Films = () => {
 	const [dataFilms, setDataFilms] = useState([]);
@@ -30,25 +30,28 @@ const Films = () => {
 	};
 
 	return (
-		<div>
-			<Input.Search
-				value={searchKey}
-				onChange={(val) => setSearchKey(val.target.value)}
-				allowClear
-				size='large'
-				placeholder='Search'
-			/>
-			<List
-				dataSource={searchKey ? results : dataFilms}
-				renderItem={(item, index) => (
-					<List.Item
-						key={`film${index}`}
-						extra={<img src={item.Images[0]} width={240} />}>
-						<List.Item.Meta title={item.Title} description={item.Plot} />
-					</List.Item>
-				)}
-			/>
-		</div>
+		<Card>
+			<div className='row mt-4'>
+				<div className='col-8 offset-2'>
+					<Input.Search
+						value={searchKey}
+						onChange={(val) => setSearchKey(val.target.value)}
+						allowClear
+						size='large'
+						placeholder='Search'
+					/>
+					<List
+						pagination={{ align: 'center' }}
+						dataSource={searchKey ? results : dataFilms}
+						renderItem={(item, index) => (
+							<List.Item key={`film${index}`}>
+								<List.Item.Meta title={item.Title} description={item.Plot} />
+							</List.Item>
+						)}
+					/>
+				</div>
+			</div>
+		</Card>
 	);
 };
 
