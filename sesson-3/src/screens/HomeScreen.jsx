@@ -1,84 +1,52 @@
 /** @format */
 
 import React, { useEffect, useState } from 'react';
-import { films } from '../data/films';
-import { List, Image, Input, Space, Button } from 'antd';
-
-const { Search } = Input;
 
 const HomeScreen = () => {
-	const [data, setData] = useState(films);
-	const [searchKey, setSearchKey] = useState('');
-	const [yearsOfFilms, setYearsOfFilms] = useState([]);
-	const [yearSelected, setYearSelected] = useState('');
+	const [todos, setTodos] = useState([]);
+	const [task, setTask] = useState('');
+	const [count, setCount] = useState(0);
 
 	useEffect(() => {
-		const items = [];
-
-		films.forEach(
-			(item) => !items.includes(item.Year) && items.push(item.Year)
-		);
-
-		setYearsOfFilms(items);
+		// do something...
 	}, []);
 
 	useEffect(() => {
-		if (!searchKey) {
-			setData(films);
+		if (count >= 5) {
+			setTodos([]);
 		} else {
-			handleSearch();
+			getTodos();
 		}
-	}, [searchKey]);
+	}, [count]);
 
 	useEffect(() => {
-		if (!yearSelected) {
-			setData(films);
-		} else {
-			const items = films.filter((element) => element.Year === yearSelected);
-			setData(items);
-		}
-	}, [yearSelected]);
+		getTodos();
+	}, [task]);
 
-	const handleSearch = () => {
-		const items = data.filter((element) =>
-			element.Title.toLowerCase().includes(searchKey)
-		);
-		setData(items);
+	const getTodos = () => {
+		const res = localStorage.getItem('todos');
+
+		if (res) {
+			setTodos(JSON.parse(res));
+		}
 	};
 
 	return (
 		<div>
-			<Search
-				placeholder='Search'
-				allowClear
-				value={searchKey}
-				onPressEnter={handleSearch}
-				onChange={(val) => setSearchKey(val.target.value)}
-				onSearch={handleSearch}
-				size='large'
-			/>
+			<h1>{count}</h1>
+			<button onClick={() => setCount(count + 1)}>+</button>
 
-			<Space style={{ margin: '20px 0' }}>
-				{yearsOfFilms.map((item) => (
-					<Button key={item} onClick={() => setYearSelected(item)}>
-						{item}
-					</Button>
-				))}
-				<Button onClick={() => setYearSelected('')} danger type='primary'>
-					Clear
-				</Button>
-			</Space>
-
-			<List
-				dataSource={data}
-				renderItem={(item, index) => (
-					<List.Item
-						key={`film${index}`}
-						extra={<img src={item.Images[0]} width={277} />}>
-						<List.Item.Meta title={item.Title} description={item.Actors} />
-					</List.Item>
-				)}
+			<button onClick={() => setCount(count - 1)}>-</button>
+			<h1>Todo Lists</h1>
+			<input
+				type='text'
+				value={task}
+				onChange={(val) => setTask(val.target.value)}
+				name=''
+				id=''
 			/>
+			{todos.length > 0 &&
+				todos.map((todo, index) => <li key={`todo${index}`}>{todo}</li>)}
 		</div>
 	);
 };
